@@ -1,0 +1,26 @@
+# docker-compose.override.yml（開発用）
+services:
+  minio:
+    image: minio/minio
+    ports:
+      - "9000:9000"
+      - "9001:9001"
+    environment:
+      MINIO_ROOT_USER: minio
+      MINIO_ROOT_PASSWORD: minio123
+    volumes:
+      - minio_data:/data
+    command: server /data --console-address ":9001"
+
+  minio-init:
+    image: minio/mc
+    depends_on:
+      - minio
+    entrypoint: >
+      sh -c "/init/create-bucket.sh"
+    volumes:
+      - ./environment/minio/create-bucket.sh:/init/create-bucket.sh
+    restart: "no"
+
+volumes:
+  minio_data:
