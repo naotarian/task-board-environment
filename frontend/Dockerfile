@@ -1,10 +1,11 @@
-FROM node:18
+FROM node:20-slim
 WORKDIR /app
 
-COPY package.json yarn.lock ./
-RUN yarn install --frozen-lockfile
+# 本番では以下のようにする
+# COPY package.json yarn.lock ./
+# RUN yarn install --frozen-lockfile
 
-COPY . ./
+# COPY . ./
 
-EXPOSE 3000
-CMD ["yarn", "dev"]
+# EXPOSE 3000
+# CMD ["yarn", "dev"]

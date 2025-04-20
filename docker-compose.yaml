@@ -64,12 +64,14 @@ services:
     container_name: frontend
     volumes:
       - ../src/frontend:/app
-      - /app/node_modules
     working_dir: /app
-    command: yarn dev
     ports:
       - "3000:3000"
     user: "${UID}:${GID}"
+    tty: true
+    environment:
+      TZ: Asia/Tokyo
+      NODE_OPTIONS: "--max-old-space-size=8192"
 
   nginx:
     image: nginx:latest
@@ -84,3 +86,4 @@ services:
 
 volumes:
   db-data:
+  # yarn-cache:
